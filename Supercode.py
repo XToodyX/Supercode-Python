@@ -35,7 +35,6 @@ def playeasy(solNumbers):
     # the correct color sequence
     print("To get help write help")
     for rounds in range(8):
-        print("Hallo")
         PYinput = ""
 
         while PYinput != "help" and PYinput not in ["1","2","3","4","5","6"]:
