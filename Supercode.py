@@ -28,7 +28,54 @@ def playhard(solNumbers):
     # the correct color sequence
     print("To get help write help")
     for rounds in range(8):
-        pass
+        PYinput = ""
+        x_white = 0
+        x_black = 0
+        notvalid = True
+
+        while notvalid:
+            PYinput = input(">").lower()
+            if PYinput == "help":
+                print(colorinfo)
+                PYinput = ""
+                continue
+            # Check if the input is valid
+            try:
+                for value in PYinput:
+                    if 1 <= int(value) <= 6:
+                        notvalid = False
+                        continue
+                    else:
+                        notvalid = True
+                        break
+            except ValueError:
+                print("Please enter 4 numbers from 1-6")
+
+        ListPYinput = list(PYinput)
+        PYinput = [int(x) for x in PYinput]
+        # Check count of black in the input
+        for index, number in enumerate(solNumbers):
+            if int(ListPYinput[index]) == number:
+                x_black += 1
+
+        # PYinput is List of integers
+        # Check count of white in the input
+        randomNumbers = set(solNumbers)
+
+        # Check count of white in the input
+        for x in randomNumbers:
+            counter = PYinput.count(x)
+            if not counter > solNumbers.count(x):
+                x_white += counter
+        x_white -= x_black
+        # Make sure that x_white isn't negative
+        if x_white < 0:
+            x_white = 0
+        print(f"{rounds + 1}. You have {x_black}x Black ones and {x_white}x White ones")
+
+        if x_black == 4:
+            print("Congratulations you won :-)")
+            quit(0)
 
 def playeasy(solNumbers):
     # Player has 8 attempts to find
@@ -36,9 +83,35 @@ def playeasy(solNumbers):
     print("To get help write help")
     for rounds in range(8):
         PYinput = ""
+        x_white = 0
+        x_black = 0
+        while len(set(PYinput) & {"1","2","3","4","5","6"}) != 4:
+            PYinput = input(">").lower()
+            if PYinput == "help":
+                print(colorinfo)
+                PYinput = ""
+                continue
 
-        while PYinput != "help" and PYinput not in ["1","2","3","4","5","6"]:
-            PYinput = str(input(">").lower())
+        ListPYinput = list(PYinput)
+        PYinput = map(int, PYinput)
+
+        # Check count of black in the input
+        for index, number in enumerate(solNumbers):
+
+            if int(ListPYinput[index]) == number:
+                x_black += 1
+
+        # Check count of white in the input
+        x_white = len(set(solNumbers) & set(PYinput)) - x_black
+        # Make sure that x_white isn't negative
+        if x_white < 0:
+            x_white = 0
+
+        print(f"{rounds+1}. You have {x_black}x Black ones and {x_white}x White ones")
+
+        if x_black == 4:
+            print("Congratulations you won :-)")
+            quit(0)
 
 if __name__ == '__main__':
 
